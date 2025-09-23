@@ -5,6 +5,6 @@ export  interface Note{
     title:string,
     content:string,
     createdAt:string,
-    updeatedAt:string,
+    updeateAt:string,
     tag:NoteTag,
 }

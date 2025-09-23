@@ -27,7 +27,7 @@ export async function fetchNotes({
   search = '',
   page = 1,
   perPage = 12,
-}: FetchNotesParams): Promise<FetchNotesResponse> { {
+}: FetchNotesParams): Promise<FetchNotesResponse>  {
      if (!NOTEHUB_TOKEN) {
     throw new Error('NoteHub token is not defined in .env file.');
   }
@@ -43,11 +43,11 @@ export async function fetchNotes({
     headers: {
       Authorization: `Bearer ${NOTEHUB_TOKEN}`,
     },
-  });
+});
 
   return response.data;
 }
-}
+
 
 export async function createNote(noteData:NoteData):Promise<Note>{
   if (!NOTEHUB_TOKEN) {
@@ -62,15 +62,16 @@ export async function createNote(noteData:NoteData):Promise<Note>{
   return createdNotes.data;
 }
 
-export async function deleteNote(noteId:string):Promise<void>{
+export async function deleteNote(noteId:string):Promise<Note>{
   if (!NOTEHUB_TOKEN) {
     throw new Error ("Notehub token is not defined")
   }
-  await axios.delete(`${BASE_URL}/${noteId}`,{
+  const response=await axios.delete<Note>(`${BASE_URL}/${noteId}`,{
     headers:{
        Authorization: `Bearer ${NOTEHUB_TOKEN}`,
     }
-  }
+  } 
   )
+  return response.data
 
 }

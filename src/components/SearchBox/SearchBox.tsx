@@ -1,9 +1,9 @@
 import css from "./SearchBox.module.css";
 import type { ChangeEvent } from "react";
-import type { DebouncedState } from "use-debounce"
+
 
 interface SearchBoxProps {
-  onSearch:  DebouncedState<(value: string) => void>;
+  onSearch:  (value: string) => void;
   value:string
 }
 

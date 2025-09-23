@@ -10,6 +10,8 @@ import Pagination from '../Pagination/Pagination';
 import NoteForm from '../NoteForm/NoteForm';
 import { Toaster } from 'react-hot-toast';
 import { useDebouncedCallback } from 'use-debounce';
+import Modal from '../Modal/Modal';
+
 
 export default function App() {
   const [query, setQuery] = useState<string>('');
@@ -24,6 +26,7 @@ export default function App() {
   } = useQuery<FetchNotesResponse, Error>({
     queryKey: ['notes', query, page],
     queryFn: () => fetchNotes({ search: query, page }),
+    placeholderData: (previousData) => previousData,
   });
 
   const handleSearch = (newQuery: string) => {
@@ -66,7 +69,11 @@ export default function App() {
       {data && data.notes.length === 0 && !isLoading && !isError && (
         <p>Notes is not found, may you change the request.</p>
       )}
-	  {isFormOpen && <NoteForm onClose={() => setIsFormOpen(false)} />}
+	  {isFormOpen && (
+        <Modal onClose={() => setIsFormOpen(false)}>
+          <NoteForm onClose={() => setIsFormOpen(false)} />
+        </Modal>
+      )}
 		<Toaster position="bottom-right" reverseOrder={false} />
     </div>
   );

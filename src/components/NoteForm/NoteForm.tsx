@@ -28,11 +28,12 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     mutationFn:(newNote:NoteData)=>createNote(newNote),
     onSuccess:()=>{
       queryClient.invalidateQueries({queryKey:["notes"]})
+      onClose();
     }
   })
   const handleSubmit = (values:NoteData) => {
     mutation.mutate(values)
-    onClose();
+    
   };
 
   return (
